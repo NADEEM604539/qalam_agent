@@ -1,7 +1,7 @@
 from playwright.async_api import async_playwright
 
 
-LOGIN_URL = "https://qalam.nust.edu.pk/"
+LOGIN_URL = "https://qalam.nust.edu.pk/web/login"
 DASHBOARD_URL = "https://qalam.nust.edu.pk/student/dashboard"
 
 

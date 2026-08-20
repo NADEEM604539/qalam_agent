@@ -10,6 +10,5 @@ class Token(BaseModel):
 
 
 class Payload(BaseModel):
-    name: str
     email: str
 

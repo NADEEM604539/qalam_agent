@@ -13,11 +13,11 @@ from backend.DTO.login import Payload
 load_dotenv()
 
 
-SECRET_KEY = os.getenv("SECRET_KEY")
-ALGORITHM = os.getenv("ALGORITHM", "HS256")
+SECRET_KEY = os.getenv("JWT_SECRET_KEY")
+ALGORITHM = os.getenv("JWT_ALGORITHM", "HS256")
 
 ACCESS_TOKEN_EXPIRE_DAYS = int(
-    os.getenv("ACCESS_TOKEN_EXPIRE_DAYS", "15")
+    os.getenv("JWT_ACCESS_TOKEN_EXPIRE_DAYS", "15")
 )
 
 if not SECRET_KEY:

@@ -2,6 +2,7 @@ from fastapi import APIRouter, FastAPI, HTTPException
 from backend.routers.login import router as login_router
 from sqlalchemy import text
 from backend.database.database import SessionLocal
+import asyncio
 import uvicorn
 app = FastAPI(
     title="Backend of Automate Qalam"
@@ -37,9 +38,12 @@ app.include_router(router=login_router, prefix="/api")
 
 
 if __name__ == "__main__":
-  uvicorn.run(
+    asyncio.set_event_loop_policy(
+        asyncio.WindowsProactorEventLoopPolicy()
+    )
+    uvicorn.run(
         "backend.main:app",
         host="0.0.0.0",
         port=8000,
-        reload=True
+        reload=False
     )
