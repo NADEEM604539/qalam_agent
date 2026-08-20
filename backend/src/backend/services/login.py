@@ -8,6 +8,10 @@ from backend.DTO.login import Payload
 
 async def login(request: Login_request):
     db = SessionLocal()
+    payload = Payload(
+            email=request.email
+        )
+    access_token = create_access_token(data=payload)
     try:
         query = text("""SELECT id, password_hash FROM users
         where email=:email
@@ -15,11 +19,28 @@ async def login(request: Login_request):
     """)
         user = await db.execute(query,{
             "email":request.email
-        }).mappings().fetchone()
+        })
+        user_details = user.mappings().fetchone()
+        decrypted_password = decrypt_password(user_details["password_hash"])
+        if decrypted_password!= request.password:
+            encrypted_password=encrypt_password(request.password)
+            query = text("""UPDATE users 
+            SET password_hash=:password
+            WHERE email=:email
+""")
+            await db.execute(query, {
+                "password":encrypted_password,
+                "email":request.email
+            })
+            await db.commit()
+        return {
+            "access_token":access_token,
+            "user_email":request.email
+        }
 
     
     except Exception as e:
-        print(e)
+        await db.rollback()
         raise HTTPException(
             status_code=500,
             detail=f"{e}"
