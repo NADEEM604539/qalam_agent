@@ -10,7 +10,7 @@ RESULT_URL_TEMPLATE = (
 )
 
 
-async def fetch_course_result(course_id: str) -> dict:
+async def fetch_course_result(course_id: str, email:str, password:str) -> dict:
 
     async with async_playwright() as p:
 
@@ -25,8 +25,8 @@ async def fetch_course_result(course_id: str) -> dict:
 
             await login_to_qalam(
                 page=page,
-                email="mtariq.bscs24seecs",
-                password="Student@123",
+                email=email,
+                password=password,
             )
 
             # ---------------------------------------------
