@@ -8,8 +8,8 @@ import asyncio
 import json
 
 
-async def update_and_fetch_courses(email:str):
-    enrolled_courses = await get_enrolled_courses()
+async def update_and_fetch_courses(email:str, password:str):
+    enrolled_courses = await get_enrolled_courses(email=email, password=password)
     try:
         db = SessionLocal()
         query = text("""SELECT id FROM users 
@@ -63,7 +63,7 @@ async def update_and_fetch_courses(email:str):
         await db.rollback()
         raise HTTPException(
             status_code=500,
-            detail=f"e"
+            detail=f"{e}"
         )
     finally:
         if db:
@@ -72,8 +72,9 @@ async def update_and_fetch_courses(email:str):
 
 
 async def fetch_results(
+    course_id: str,
     email: str,
-    course_id: str
+    password:str
 ):
 
     db = SessionLocal()
@@ -111,7 +112,9 @@ async def fetch_results(
         # ---------------------------------------------
 
         latest_result = await fetch_course_result(
-            course_id=course_id
+            course_id=course_id,
+            email=email,
+            password=password
         )
 
         # ---------------------------------------------
@@ -234,7 +237,8 @@ async def fetch_results(
             "status": "updated",
             "changed": True,
             "course_id": course_id,
-            "data": latest_result
+            "data": latest_result,
+            "previous_data":old_data
         }
 
     except Exception:
