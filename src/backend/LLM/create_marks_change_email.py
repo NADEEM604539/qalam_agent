@@ -1,5 +1,5 @@
-from backend.LLM.objects import MarksChangeResponse
-from backend.LLM.diff_marks import compute_marks_change
+from src.backend.LLM.objects import MarksChangeResponse
+from src.backend.LLM.diff_marks import compute_marks_change
 import os
 from dotenv import load_dotenv
 

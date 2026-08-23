@@ -7,7 +7,7 @@ from apscheduler.triggers.interval import IntervalTrigger
 from apscheduler.executors.asyncio import AsyncIOExecutor
 from apscheduler.job import Job
 
-from backend.services.workflow import marks_change_workflow
+from src.backend.services.workflow import marks_change_workflow
 
 logger = logging.getLogger("scheduler")
 logging.basicConfig(level=logging.INFO)

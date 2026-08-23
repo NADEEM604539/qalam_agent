@@ -2,7 +2,7 @@ import re
 
 from playwright.async_api import async_playwright
 
-from backend.web_scraping.playwright_login import login_to_qalam
+from src.backend.web_scraping.playwright_login import login_to_qalam
 
 
 RESULT_URL_TEMPLATE = (

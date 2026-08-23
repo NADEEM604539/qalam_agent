@@ -1,5 +1,5 @@
 from langchain_core.prompts import PromptTemplate
-from backend.LLM.parsers import marks_change_parser
+from src.backend.LLM.parsers import marks_change_parser
 
 marks_change_prompt = PromptTemplate(
     template="""

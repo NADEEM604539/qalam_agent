@@ -1,9 +1,9 @@
-from backend.database.database import SessionLocal
-from backend.web_scraping.playwright_get_courses import get_enrolled_courses
+from src.backend.database.database import SessionLocal
+from src.backend.web_scraping.playwright_get_courses import get_enrolled_courses
 from sqlalchemy import text
 from fastapi import HTTPException
 from playwright.async_api import Page
-from backend.web_scraping.playwright_fetch_results import fetch_course_result
+from src.backend.web_scraping.playwright_fetch_results import fetch_course_result
 import asyncio
 import json
 
