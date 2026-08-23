@@ -30,8 +30,7 @@ app = FastAPI(title="Backend of Automate Qalam", lifespan=lifespan)
 
 origins = [
     "http://localhost:3000",       # Local React development
-    "http://127.0.0.1:5173",      # Local Vite development
-    "https://myproductionapp.com"  # Production domain
+    "https://qalam-marks-detector.vercel.app/",       # Production domain
 ]
 
 # 2. Add CORSMiddleware to your application stack
