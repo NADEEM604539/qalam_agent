@@ -1,4 +1,4 @@
-from src.backend.database.database import SessionLocal
+from backend.database.database import SessionLocal
 from sqlalchemy import text
 import json
 

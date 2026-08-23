@@ -3,12 +3,12 @@ import sys
 from contextlib import asynccontextmanager
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI
-from src.backend.routers.login import router as login_router
-from src.backend.routers.dashboard import router as dashboard_router
+from backend.routers.login import router as login_router
+from backend.routers.dashboard import router as dashboard_router
 
 from sqlalchemy import text
-from src.backend.database.database import SessionLocal
-from src.backend.services.scheduler import (
+from backend.database.database import SessionLocal
+from backend.services.scheduler import (
     start_scheduler,
     stop_scheduler,
     get_job_status,

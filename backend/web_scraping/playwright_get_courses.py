@@ -1,6 +1,6 @@
 import re
 from playwright.async_api import async_playwright, Page
-from src.backend.web_scraping.playwright_login import login_to_qalam
+from backend.web_scraping.playwright_login import login_to_qalam
 import asyncio
 
 

@@ -1,10 +1,10 @@
-from src.backend.DTO.login import Login_request
-from src.backend.database.database import SessionLocal
+from backend.DTO.login import Login_request
+from backend.database.database import SessionLocal
 from fastapi import HTTPException
 from sqlalchemy import text
-from src.backend.services.security import encrypt_password, decrypt_password
-from src.backend.services.jwt_service import create_access_token
-from src.backend.DTO.login import Payload
+from backend.services.security import encrypt_password, decrypt_password
+from backend.services.jwt_service import create_access_token
+from backend.DTO.login import Payload
 
 
 async def login(request: Login_request):

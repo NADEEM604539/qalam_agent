@@ -1,9 +1,9 @@
 from fastapi import APIRouter
-from src.backend.DTO.login import Login_request
-from src.backend.services.login import login, register, get_user
-from src.backend.web_scraping.playwright_login import login_to_qalam
+from backend.DTO.login import Login_request
+from backend.services.login import login, register, get_user
+from backend.web_scraping.playwright_login import login_to_qalam
 from playwright.async_api import Page
-from src.backend.web_scraping.playwright_get_courses import get_enrolled_courses
+from backend.web_scraping.playwright_get_courses import get_enrolled_courses
 from fastapi import HTTPException
 from playwright.async_api import async_playwright
 

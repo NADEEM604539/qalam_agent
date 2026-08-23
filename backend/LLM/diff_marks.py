@@ -1,6 +1,6 @@
 from typing import Optional
 
-from src.backend.LLM.objects import (
+from backend.LLM.objects import (
     MarksChangeResponse,
     CourseResultChange,
     AssessmentResultItem,

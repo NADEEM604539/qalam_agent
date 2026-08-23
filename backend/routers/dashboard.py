@@ -1,8 +1,8 @@
 from fastapi import APIRouter
-from src.backend.services.dashboard import get_dashboard, toggle_status
+from backend.services.dashboard import get_dashboard, toggle_status
 from fastapi import Depends
-from src.backend.services.jwt_service import get_current_user
-from src.backend.DTO.login import Status
+from backend.services.jwt_service import get_current_user
+from backend.DTO.login import Status
     
 router = APIRouter(
     prefix="/dashboard",

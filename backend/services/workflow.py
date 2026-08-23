@@ -3,9 +3,9 @@ import os
 import httpx
 from dotenv import load_dotenv
 
-from src.backend.services.courses import update_and_fetch_courses, fetch_results
-from src.backend.services.login import get_all_users
-from src.backend.LLM.create_marks_change_email import llm_generate_email
+from backend.services.courses import update_and_fetch_courses, fetch_results
+from backend.services.login import get_all_users
+from backend.LLM.create_marks_change_email import llm_generate_email
 
 load_dotenv()
 
