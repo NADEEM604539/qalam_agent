@@ -1,5 +1,5 @@
-from pathlib import Path
 import os
+import tempfile
 
 from dotenv import load_dotenv
 from sqlalchemy.ext.asyncio import (
@@ -9,13 +9,8 @@ from sqlalchemy.ext.asyncio import (
 )
 from sqlalchemy.orm import DeclarativeBase
 
-
 load_dotenv()
 
-
-# =========================
-# Database Configuration
-# =========================
 
 DB_HOST = os.getenv("DB_HOST")
 DB_PORT = os.getenv("DB_PORT", "4000")
@@ -23,24 +18,30 @@ DB_USER = os.getenv("DB_USER")
 DB_PASSWORD = os.getenv("DB_PASSWORD")
 DB_NAME = os.getenv("DB_NAME")
 
+TIDB_CA_CERT = os.getenv("TIDB_CA_CERT")
 
-# =========================
-# TiDB Cloud SSL Certificate
-# =========================
 
-BASE_DIR = Path(__file__).resolve().parents[3]
-
-CA_CERT = BASE_DIR / "certs" / "ca.pem"
-
-if not CA_CERT.exists():
-    raise FileNotFoundError(
-        f"TiDB Cloud CA certificate not found: {CA_CERT}"
+if not TIDB_CA_CERT:
+    raise RuntimeError(
+        "TIDB_CA_CERT environment variable is not configured."
     )
 
 
-# =========================
-# Database URL
-# =========================
+# Convert escaped \n characters back into real newlines
+TIDB_CA_CERT = TIDB_CA_CERT.replace("\\n", "\n")
+
+
+# Create a temporary certificate file
+ca_file = tempfile.NamedTemporaryFile(
+    mode="w",
+    suffix=".pem",
+    delete=False,
+)
+
+ca_file.write(TIDB_CA_CERT)
+ca_file.flush()
+ca_file.close()
+
 
 DATABASE_URL = (
     f"mysql+asyncmy://"
@@ -50,31 +51,19 @@ DATABASE_URL = (
 )
 
 
-# =========================
-# SQLAlchemy Base
-# =========================
-
 class Base(DeclarativeBase):
     pass
 
 
-# =========================
-# Async Engine
-# =========================
-
 engine = create_async_engine(
     DATABASE_URL,
     connect_args={
-        "ssl_ca": str(CA_CERT),
+        "ssl_ca": ca_file.name,
     },
     pool_pre_ping=True,
     pool_recycle=1800,
 )
 
-
-# =========================
-# Async Session
-# =========================
 
 SessionLocal = async_sessionmaker(
     bind=engine,
