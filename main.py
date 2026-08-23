@@ -2,7 +2,7 @@ import asyncio
 import sys
 from contextlib import asynccontextmanager
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from backend.routers.login import router as login_router
 from backend.routers.dashboard import router as dashboard_router
 
@@ -42,6 +42,18 @@ app.add_middleware(
     allow_headers=["*"],             # Allowed request headers
 )
 
+@app.get('/db-check')
+async def db_check():
+    try:
+        connection= SessionLocal()
+        result = await connection.execute(text("SELECT 2 + 2 AS result")).scalar_one()
+        return {
+            "db_connected": True,
+            "query": "SELECT 2 + 2 AS result",
+            "result": result,
+        }
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=f"DB check failed: {str(exc)}")
 # ... your routes ...
 
 app.include_router(router=login_router, prefix="/api")
