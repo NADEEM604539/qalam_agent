@@ -12,3 +12,6 @@ class Token(BaseModel):
 class Payload(BaseModel):
     email: str
 
+class Status(BaseModel):
+    status:bool
+

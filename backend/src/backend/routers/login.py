@@ -5,6 +5,7 @@ from backend.web_scraping.playwright_login import login_to_qalam
 from playwright.async_api import Page
 from backend.web_scraping.playwright_get_courses import get_enrolled_courses
 from fastapi import HTTPException
+from playwright.async_api import async_playwright
 
 router = APIRouter(
     prefix="/login",
@@ -13,8 +14,12 @@ router = APIRouter(
 
 @router.post("/")
 async def login_Request(request: Login_request):
-    qalam_login = await login_to_qalam(page=Page, email=request.email, password=request.password)
-    qalam_login=True
+    qalam_login=False
+    async with async_playwright() as p:
+        browser = await p.chromium.launch(headless=False)
+        page = await browser.new_page()
+        qalam_login = await login_to_qalam(page=page, email=request.email, password=request.password)
+        await browser.close()
     if qalam_login:
         user = await get_user(request.email)
         if user:
@@ -28,9 +33,3 @@ async def login_Request(request: Login_request):
             detail="Invalid Credentials"   
         )
         
-
-
-@router.get("/testing")
-async def testing():
-    courses = await get_enrolled_courses()
-    return courses
