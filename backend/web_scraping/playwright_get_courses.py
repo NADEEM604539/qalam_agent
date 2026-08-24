@@ -45,7 +45,7 @@ async def fetch_courses(page: Page, courses_url: str):
 
 async def get_enrolled_courses(email:str, password:str):
     async with async_playwright() as p:
-        browser = await p.chromium.launch(headless=False)
+        browser = await p.chromium.launch(headless=True)
         page = await browser.new_page()
 
         logged_in = await login_to_qalam(
