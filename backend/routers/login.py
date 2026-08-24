@@ -16,7 +16,7 @@ router = APIRouter(
 async def login_Request(request: Login_request):
     qalam_login=False
     async with async_playwright() as p:
-        browser = await p.chromium.launch(headless=False)
+        browser = await p.chromium.launch(headless=True)
         page = await browser.new_page()
         qalam_login = await login_to_qalam(page=page, email=request.email, password=request.password)
         await browser.close()
