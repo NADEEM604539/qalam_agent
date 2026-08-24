@@ -66,4 +66,3 @@ async def get_enrolled_courses(email:str, password:str):
 if __name__=="__main__":
     
     asyncio.run(get_enrolled_courses())
-
